@@ -13,7 +13,7 @@ public class Customer {
         _rentals.addElement(arg);
     }
 
-    public String statement () {
+    /*public String statement () {
         double totalAmount = 0;
         int frequentRenterPoints = 0;
         Enumeration rentals = _rentals.elements();
@@ -37,36 +37,26 @@ public class Customer {
         result += "Amount owed is " + String.valueOf(totalAmount) + "\n";
         result += "You earned " + String.valueOf(frequentRenterPoints) + " frequent renter points";
         return result;
-    }
+    }*/
 
     public String getName() {
         return _name;
     }
-   /*
-    
-    */
-    public double amountFor()
-    {
-        double thisAmount = 0;
-        Enumeration rentals = _rentals.elements();
-        Rental each = (Rental) rentals.nextElement();
-            
-          // determine amounts for each line
-            switch (each.getMovie().getPriceCode()) {
-                case Movie.REGULAR:
-                    thisAmount += 2;
-                    if (each.getDaysRented() > 2)
-                        thisAmount += (each.getDaysRented() - 2) * 1.5;
-                    break;
-                case Movie.NEW_RELEASE:
-                    thisAmount += each.getDaysRented() * 3;
-                    break;
-                case Movie.CHILDRENS:
-                    thisAmount += 1.5;
-                    if (each.getDaysRented() > 3)
-                        thisAmount += (each.getDaysRented() - 3) * 1.5;
-                    break;
-            }
-            return thisAmount;
-    }
+  public int getFrequentRenterPoints(int fr,String result,double thisAmount)
+  {
+      Enumeration rentals = _rentals.elements();
+      Rental each = (Rental) rentals.nextElement();
+      double totalAmount = 0;
+      
+      fr++;
+      if ((each.getMovie().getPriceCode() == Movie.NEW_RELEASE) && each.getDaysRented() > 1)
+      {fr ++;
+            // show figures for this rental
+            result += "\t" + each.getMovie().getTitle() + "\t" + String.valueOf(thisAmount) + "\n";
+            totalAmount += thisAmount;
+            return 2;
+        }
+        else
+          return 1;
+  }
 }
